@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     )
 
     # Application
-    APP_NAME: str = "FastAPI Batches"
+    APP_NAME: str = "FastAPI ShipEngine Batches API"
     DEBUG: bool = True
     API_V1_STR: str = "/api/v1"
 

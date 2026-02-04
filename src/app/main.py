@@ -22,6 +22,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title=settings.APP_NAME,
+    description="Production-ready API for managing shipping batches with async PostgreSQL, Redis caching, and JWT authentication",
+    version="1.0.0",
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
     lifespan=lifespan,
 )
