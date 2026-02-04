@@ -130,14 +130,18 @@ docker-compose up -d
 
 ### Users
 - `GET /api/v1/users/me` - Get current user
-- `POST /api/v1/users` - Create new user
+- `POST /api/v1/users` - Create new user (superuser only)
 - `GET /api/v1/users/{user_id}` - Get user by ID
+- `PUT /api/v1/users/{user_id}` - Update user (superuser only)
+- `DELETE /api/v1/users/{user_id}` - Delete user (superuser only)
 
 ### Batches
 - `POST /api/v1/batches/{batch_id}/add` - Add shipments/rates to batch
-- `GET /api/v1/batches/{batch_id}/errors` - Get batch errors
+- `GET /api/v1/batches/{batch_id}` - Get batch details with caching
+- `GET /api/v1/batches/{batch_id}/errors` - Get batch errors (paginated)
 - `POST /api/v1/batches/{batch_id}/process/labels` - Process batch labels
 - `POST /api/v1/batches/{batch_id}/remove` - Remove items from batch
+- `DELETE /api/v1/batches/{batch_id}` - Delete batch completely
 
 ## Testing
 
