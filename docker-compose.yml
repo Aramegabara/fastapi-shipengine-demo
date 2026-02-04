@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: fastapi_batches_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: p4ssword
+      POSTGRES_DB: fastapi_batches
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - fastapi_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: fastapi_batches_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - fastapi_network
+
+  web:
+    build: .
+    container_name: fastapi_batches_web
+    command: uvicorn src.app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:p4ssword@db:5432/fastapi_batches
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=your-secret-key-change-in-production
+      - ADMIN_EMAIL=geraskov94@gmail.com
+    depends_on:
+      - db
+      - redis
+    networks:
+      - fastapi_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  fastapi_network:
+    driver: bridge
